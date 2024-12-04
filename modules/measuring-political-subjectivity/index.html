@@ -1,0 +1,463 @@
+<!doctype html> <html lang=en > <meta charset=UTF-8 > <meta name=viewport  content="width=device-width, initial-scale=1"> <link rel=stylesheet  href="/nlpwme/libs/katex/katex.min.css"> <link rel=stylesheet  href="/nlpwme/libs/highlight/styles/github.min.css"> <link rel=stylesheet  href="/nlpwme/css/franklin.css"> <link rel=stylesheet  href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,400italic|Source+Code+Pro:400,700" type="text/css"> <link rel=stylesheet  href="/nlpwme/css/font-awesome.min.css"> <link rel=stylesheet  href="/nlpwme/css/celeste.min.css"> <link rel=icon  type="image/png" sizes=200x200  href="/nlpwme/assets/robot.png"> <link rel=icon  type="image/png" sizes=152x152  href="/nlpwme/assets/robot_smaller_152x152.png"> <link rel=icon  type="image/x-icon" sizes=64x64  href="/nlpwme/assets/robot_smaller_64x64.png"> <link rel=icon  type="image/x-icon" sizes=32x32  href="/nlpwme/assets/robot_smaller_32x32.png"> <link rel=icon  type="image/png" sizes=64x64  href="/nlpwme/assets/robot_smaller_64x64.png"> <link rel=icon  type="image/png" sizes=32x32  href="/nlpwme/assets/robot_smaller_32x32.png"> <title>NLPwShiyi | Natural Language Processing with Shiyi</title> <nav id=navbar  class=navigation  role=navigation > <input id=toggle1  type=checkbox  /> <label class=hamburger1  for=toggle1 > <div class=top ></div> <div class=meat ></div> <div class=bottom ></div> </label> <nav class="topnav mx-auto" id=myTopnav > <div class=dropdown > <button class=dropbtn >Comp Ling <i class="fa fa-caret-down"></i> </button> <div class=dropdown-content > <a href="/nlpwme/modules/1b-info-theory">Information Theory</a> <a href="/nlpwme/modules/1c-noisy-channel-model">The Noisy Channel Model</a> <a href="/nlpwme/modules/1d-finite-automata">FSAs and FSTs</a> <a href="/nlpwme/modules/1e-mutual-info">Mutual Information</a> <a href="/nlpwme/modules/1f-cky-algorithm">CKY Algorithm</a> <a href="/nlpwme/modules/1g-viterbi">Viterbi Algorithm</a> <a href="/nlpwme/modules/2b-markov-processes">Markov Processes</a> <a href="/nlpwme/modules/1h-semantics">Logic and Problem Solving</a> <a href="/nlpwme/modules/1j-bayesian">Bayesian Inference</a> </div> </div> <div class=dropdown > <button class=dropbtn  >ML / DL <i class="fa fa-caret-down"></i> </button> <div class=dropdown-content > <a href="/nlpwme/modules/2e-jax">Jacobian Matrices Derivation</a> <a href="/nlpwme/modules/2d-automatic-differentiation">Automatic Differentiation</a> <a href="/nlpwme/modules/2f-loss-functions">Stochastic GD</a> <a href="/nlpwme/modules/2c-word2vec">Word2Vec</a> <a href="/nlpwme/modules/2g-batchnorm">Batchnorm</a> <a href="/nlpwme/modules/2j-perplexity">Perplexity</a> <a href="/nlpwme/modules/2h-dropout">Dropout</a> <a href="/nlpwme/modules/2i-depth">Depth: Pros and Cons</a> <a href="/nlpwme/modules/2k-VAE">Variational Autoencoders</a> <a href="/nlpwme/modules/2l-dnns">DNNs(RNNs, CNNs, (Bi)-LSTM)</a> </div> </div> <a href="/nlpwme/" class=active >Intro </a> <div class=dropdown > <button class=dropbtn  >SOTA <i class="fa fa-caret-down"></i> </button> <div class=dropdown-content > <a href="/nlpwme/modules/3a-transformers"> GPT (Generative Pre-trained Transformer) </a> <a href="/nlpwme/modules/3b-xlnet"> XLNet (Generalized Autoregressive Pretraining) </a> <a href="/nlpwme/modules/3c-roberta"> RoBERTa (Robustly optimized BERT approach) </a> <a href="/nlpwme/modules/3d-t5"> T5 (Text-to-Text Transfer Transformer) </a> <a href="/nlpwme/modules/3e-clip"> CLIP (Contrastive Language-Image Pre-training) </a> </div> </div> <div class=dropdown > <button class=dropbtn  >Hands-on <i class="fa fa-caret-down"></i> </button> <div class=dropdown-content > <a href="/nlpwme/modules/4a-mlp-from-scratch">MLP from Scratch</a> <a href="/nlpwme/modules/4b-generative-adversarial-networks">GAN Example </a> <a href="/nlpwme/modules/4c-vae-mnist">VAE for MNIST</a> <a href="/nlpwme/modules/4d-bi-lstm-crf">BI-LSTM-CRF Seq2Seq</a> <a href="/nlpwme/modules/4e-c4fe-tbip">Measuring Subjectivity with VAE</a> <a href="/nlpwme/modules/4g-etl-job">Serverless ETL Example</a> <a href="/nlpwme/modules/4h-ocr-data-aug">OCR Text Augmentation</a> <a href="/nlpwme/modules/4i-neo4j-gql">Neo4j GQL Example</a> </div> </div> </nav> </nav> <script src="../assets/js/custom.js"></script> <div class=franklin-content ><h2 id=measuring_political_subjectivity_with_variational_encoding_methods ><a href="#measuring_political_subjectivity_with_variational_encoding_methods" class=header-anchor >Measuring Political Subjectivity with Variational Encoding Methods </a></h2> <div class=franklin-toc ><ol><li><a href="#measuring_political_subjectivity_with_variational_encoding_methods">Measuring Political Subjectivity with Variational Encoding Methods </a><li><a href="#the_motivation_behind_this_project">The Motivation behind This Project </a><li><a href="#model_implementation_with_numpyro">Model Implementation with NumPyro</a></ol></div> <p>In socio-politics, quantified approaches and modeling techniques are applied in supporting and facilitating political analyses. Individuals, parties, committees and other political entities come together and try to push forward campaigns in hope to receive appropriate patrionization and support for their political agenda. </p> <p>The Political Action Committees &#40;PACs or Super PACs&#41; amass funding resources that could benefit the elections. These type of fundings could be from other individuals, or political entities. For the sole of purpose of understanding what the processes of fund raising activities like these really are, this part of the project explores the 2021-2022 PACs financial data.</p> <p>This part of the project will first present the receipts, disbursements, and other expenditures in terms of propagating political actions in visualization format grounded in states; for example, how many different political action committees there are by US states. </p> <p>This part of the project will also break down all the candidates of 2022 their basic information as mentioned above including their basic demographics, political party affiliation, election cycle, and incumbency.</p> <p>All info is retrievable through the Federal Election Commission&#39;s directory. This project seeks to conduct the research with full transparency and abide to relevant code of conduct.</p> <h2 id=the_motivation_behind_this_project ><a href="#the_motivation_behind_this_project" class=header-anchor >The Motivation behind This Project </a></h2> <p>Measuring political sentiment and polarization is a common practice in the realm of social science research. However, it may also be applicable to solving business problems, like providing more information about a certain candidate to voters to fill the information gap and facilitate voting processes. </p> <p>This project tries to help someone who is interested in voting activities understand the political leaning of a candidate for federal elections. </p> <p>In this blog, the structure and construct of the model will be explained. Please check out this <a href="https://github.com/shiyis/c4fe-tbip">repo</a> for a more comprehensive demo of the project and other complementary analysis. </p> <p>draws inspiration from website like <a href="https://www.opensecrets.org/">OpenSecrets</a> and <a href="https://arxiv.org/abs/2005.04232">this paper</a>, where it strives to uncover information of a politician&#39;s agenda and activities &#40;campaign-related or financial&#41;.</p> <p>helps the general population who is interested in partaking in political activities understand a politician &#40;or anyone who authors political content&#41;&#39;s leaning/stance by extracting crucial information from relevant political text. </p> <p>Website like <a href="https://www.opensecrets.org/">OpenSecrets</a> provides valuable statistics and educational information to start. This project tries to top it off by retrieving organic information &#40;Tweets&#41; of said candidates and conduct analysis accordingly. </p> <h2 id=model_implementation_with_numpyro ><a href="#model_implementation_with_numpyro" class=header-anchor >Model Implementation with NumPyro</a></h2> <pre><code class="python hljs">%%capture
+%pip install numpyro==<span class=hljs-number >0.10</span><span class=hljs-number >.1</span>
+%pip install optax</code></pre> <pre><code class="python hljs"><span class=hljs-keyword >from</span> scipy <span class=hljs-keyword >import</span> sparse
+<span class=hljs-keyword >import</span> jax
+<span class=hljs-keyword >import</span> jax.numpy <span class=hljs-keyword >as</span> jnp
+<span class=hljs-keyword >import</span> numpy <span class=hljs-keyword >as</span> np
+
+dataPath = <span class=hljs-string >&quot;tbip/data/senate-speeches-114/clean/&quot;</span>
+
+<span class=hljs-comment ># Load data</span>
+author_indices = jax.device_put(
+    jnp.load(dataPath + <span class=hljs-string >&quot;author_indices.npy&quot;</span>), jax.devices(<span class=hljs-string >&quot;gpu&quot;</span>)[<span class=hljs-number >0</span>]
+)
+
+counts = sparse.load_npz(dataPath + <span class=hljs-string >&quot;counts.npz&quot;</span>)
+
+<span class=hljs-keyword >with</span> <span class=hljs-built_in >open</span>(dataPath + <span class=hljs-string >&quot;vocabulary.txt&quot;</span>, <span class=hljs-string >&quot;r&quot;</span>) <span class=hljs-keyword >as</span> f:
+    vocabulary = f.readlines()
+
+<span class=hljs-keyword >with</span> <span class=hljs-built_in >open</span>(dataPath + <span class=hljs-string >&quot;author_map.txt&quot;</span>, <span class=hljs-string >&quot;r&quot;</span>) <span class=hljs-keyword >as</span> f:
+    author_map = f.readlines()
+
+author_map = np.array(author_map)
+
+num_authors = <span class=hljs-built_in >int</span>(author_indices.<span class=hljs-built_in >max</span>() + <span class=hljs-number >1</span>)
+num_documents, num_words = counts.shape</code></pre> <pre><code class="python hljs">pre_initialize_parameters = <span class=hljs-literal >True</span></code></pre>
+<pre><code class="python hljs"><span class=hljs-comment ># Fit NMF to be used as initialization for TBIP</span>
+<span class=hljs-keyword >from</span> sklearn.decomposition <span class=hljs-keyword >import</span> NMF
+
+<span class=hljs-keyword >if</span> pre_initialize_parameters:
+    nmf_model = NMF(
+        n_components=num_topics, init=<span class=hljs-string >&quot;random&quot;</span>, random_state=<span class=hljs-number >0</span>, max_iter=<span class=hljs-number >500</span>
+    )
+    <span class=hljs-comment ># Define initialization arrays</span>
+    initial_document_loc = jnp.log(
+        jnp.array(np.float32(nmf_model.fit_transform(counts) + <span class=hljs-number >1e-2</span>))
+    )
+    initial_objective_topic_loc = jnp.log(
+        jnp.array(np.float32(nmf_model.components_ + <span class=hljs-number >1e-2</span>))
+    )
+<span class=hljs-keyword >else</span>:
+    rng1, rng2 = random.split(rng_seed, <span class=hljs-number >2</span>)
+    initial_document_loc = random.normal(rng1, 
+                                        shape=(num_documents, num_topics))
+    initial_objective_topic_loc = random.normal(rng2, 
+                                        shape=(num_topics, num_words))</code></pre>
+<pre><code class="python hljs"><span class=hljs-comment ># Fit NMF to be used as initialization for TBIP</span>
+<span class=hljs-keyword >from</span> sklearn.decomposition <span class=hljs-keyword >import</span> NMF
+
+<span class=hljs-keyword >if</span> pre_initialize_parameters:
+    nmf_model = NMF(
+        n_components=num_topics, init=<span class=hljs-string >&quot;random&quot;</span>, random_state=<span class=hljs-number >0</span>, max_iter=<span class=hljs-number >500</span>
+    )
+    <span class=hljs-comment ># Define initialization arrays</span>
+    initial_document_loc = jnp.log(
+        jnp.array(np.float32(nmf_model.fit_transform(counts) + <span class=hljs-number >1e-2</span>))
+    )
+    initial_objective_topic_loc = jnp.log(
+        jnp.array(np.float32(nmf_model.components_ + <span class=hljs-number >1e-2</span>))
+    )
+<span class=hljs-keyword >else</span>:
+    rng1, rng2 = random.split(rng_seed, <span class=hljs-number >2</span>)
+    initial_document_loc = random.normal(rng1, shape=(num_documents, num_topics))
+    initial_objective_topic_loc = random.normal(rng2, shape=(num_topics, num_words))</code></pre>
+<p>The results are inferred using variational inference with reparameterization gradients. </p>
+<p>It is intractable to evaluate the posterior distribution, so we approximate the posterior with a distribution. How do we set the values? We want to minimize the KL-Divergence between and the posterior, which is equivalent to maximizing the ELBO:</p>
+<p>Sure, here is the LaTeX representation of the Evidence Lower Bound &#40;ELBO&#41; and the Kullback-Leibler &#40;KL&#41; divergence:</p>
+<span class=katex-display ><span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML" display=block ><semantics><mrow><mtext>ELBO</mtext><mo>=</mo><msub><mi mathvariant=double-struck >E</mi><mrow><mi>q</mi><mo stretchy=false >(</mo><mi>z</mi><mi mathvariant=normal >∣</mi><mi>x</mi><mo stretchy=false >)</mo></mrow></msub><mo stretchy=false >[</mo><mi>log</mi><mo>⁡</mo><mi>p</mi><mo stretchy=false >(</mo><mi>x</mi><mo separator=true >,</mo><mi>z</mi><mo stretchy=false >)</mo><mo>−</mo><mi>log</mi><mo>⁡</mo><mi>q</mi><mo stretchy=false >(</mo><mi>z</mi><mi mathvariant=normal >∣</mi><mi>x</mi><mo stretchy=false >)</mo><mo stretchy=false >]</mo></mrow><annotation encoding="application/x-tex">
+\text{ELBO} = \mathbb{E}_{q(z|x)}[\log p(x, z) - \log q(z|x)]
+</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:0.6833em;"></span><span class="mord text"><span class=mord >ELBO</span></span><span class=mspace  style="margin-right:0.2778em;"></span><span class=mrel >=</span><span class=mspace  style="margin-right:0.2778em;"></span></span><span class=base ><span class=strut  style="height:1.1052em;vertical-align:-0.3552em;"></span><span class=mord ><span class="mord mathbb">E</span><span class=msupsub ><span class="vlist-t vlist-t2"><span class=vlist-r ><span class=vlist  style="height:0.3448em;"><span style="top:-2.5198em;margin-left:0em;margin-right:0.05em;"><span class=pstrut  style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.03588em;">q</span><span class="mopen mtight">(</span><span class="mord mathnormal mtight" style="margin-right:0.04398em;">z</span><span class="mord mtight">∣</span><span class="mord mathnormal mtight">x</span><span class="mclose mtight">)</span></span></span></span></span><span class=vlist-s >​</span></span><span class=vlist-r ><span class=vlist  style="height:0.3552em;"><span></span></span></span></span></span></span><span class=mopen >[</span><span class=mop >lo<span style="margin-right:0.01389em;">g</span></span><span class=mspace  style="margin-right:0.1667em;"></span><span class="mord mathnormal">p</span><span class=mopen >(</span><span class="mord mathnormal">x</span><span class=mpunct >,</span><span class=mspace  style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.04398em;">z</span><span class=mclose >)</span><span class=mspace  style="margin-right:0.2222em;"></span><span class=mbin >−</span><span class=mspace  style="margin-right:0.2222em;"></span></span><span class=base ><span class=strut  style="height:1em;vertical-align:-0.25em;"></span><span class=mop >lo<span style="margin-right:0.01389em;">g</span></span><span class=mspace  style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">q</span><span class=mopen >(</span><span class="mord mathnormal" style="margin-right:0.04398em;">z</span><span class=mord >∣</span><span class="mord mathnormal">x</span><span class=mclose >)]</span></span></span></span></span>
+<span class=katex-display ><span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML" display=block ><semantics><mrow><mtext>KL</mtext><mo stretchy=false >(</mo><mi>q</mi><mo stretchy=false >(</mo><mi>z</mi><mi mathvariant=normal >∣</mi><mi>x</mi><mo stretchy=false >)</mo><mi mathvariant=normal >∣</mi><mi mathvariant=normal >∣</mi><mi>p</mi><mo stretchy=false >(</mo><mi>z</mi><mo stretchy=false >)</mo><mo stretchy=false >)</mo><mo>=</mo><msub><mi mathvariant=double-struck >E</mi><mrow><mi>q</mi><mo stretchy=false >(</mo><mi>z</mi><mi mathvariant=normal >∣</mi><mi>x</mi><mo stretchy=false >)</mo></mrow></msub><mo stretchy=false >[</mo><mi>log</mi><mo>⁡</mo><mi>q</mi><mo stretchy=false >(</mo><mi>z</mi><mi mathvariant=normal >∣</mi><mi>x</mi><mo stretchy=false >)</mo><mo>−</mo><mi>log</mi><mo>⁡</mo><mi>p</mi><mo stretchy=false >(</mo><mi>z</mi><mo stretchy=false >)</mo><mo stretchy=false >]</mo></mrow><annotation encoding="application/x-tex">
+\text{KL}(q(z|x)||p(z)) = \mathbb{E}_{q(z|x)}[\log q(z|x) - \log p(z)]
+</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:1em;vertical-align:-0.25em;"></span><span class="mord text"><span class=mord >KL</span></span><span class=mopen >(</span><span class="mord mathnormal" style="margin-right:0.03588em;">q</span><span class=mopen >(</span><span class="mord mathnormal" style="margin-right:0.04398em;">z</span><span class=mord >∣</span><span class="mord mathnormal">x</span><span class=mclose >)</span><span class=mord >∣∣</span><span class="mord mathnormal">p</span><span class=mopen >(</span><span class="mord mathnormal" style="margin-right:0.04398em;">z</span><span class=mclose >))</span><span class=mspace  style="margin-right:0.2778em;"></span><span class=mrel >=</span><span class=mspace  style="margin-right:0.2778em;"></span></span><span class=base ><span class=strut  style="height:1.1052em;vertical-align:-0.3552em;"></span><span class=mord ><span class="mord mathbb">E</span><span class=msupsub ><span class="vlist-t vlist-t2"><span class=vlist-r ><span class=vlist  style="height:0.3448em;"><span style="top:-2.5198em;margin-left:0em;margin-right:0.05em;"><span class=pstrut  style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.03588em;">q</span><span class="mopen mtight">(</span><span class="mord mathnormal mtight" style="margin-right:0.04398em;">z</span><span class="mord mtight">∣</span><span class="mord mathnormal mtight">x</span><span class="mclose mtight">)</span></span></span></span></span><span class=vlist-s >​</span></span><span class=vlist-r ><span class=vlist  style="height:0.3552em;"><span></span></span></span></span></span></span><span class=mopen >[</span><span class=mop >lo<span style="margin-right:0.01389em;">g</span></span><span class=mspace  style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">q</span><span class=mopen >(</span><span class="mord mathnormal" style="margin-right:0.04398em;">z</span><span class=mord >∣</span><span class="mord mathnormal">x</span><span class=mclose >)</span><span class=mspace  style="margin-right:0.2222em;"></span><span class=mbin >−</span><span class=mspace  style="margin-right:0.2222em;"></span></span><span class=base ><span class=strut  style="height:1em;vertical-align:-0.25em;"></span><span class=mop >lo<span style="margin-right:0.01389em;">g</span></span><span class=mspace  style="margin-right:0.1667em;"></span><span class="mord mathnormal">p</span><span class=mopen >(</span><span class="mord mathnormal" style="margin-right:0.04398em;">z</span><span class=mclose >)]</span></span></span></span></span>
+<p>In these equations:</p>
+<ul>
+<li><p><span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>q</mi><mo stretchy=false >(</mo><mi>z</mi><mi mathvariant=normal >∣</mi><mi>x</mi><mo stretchy=false >)</mo></mrow><annotation encoding="application/x-tex">q(z|x)</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">q</span><span class=mopen >(</span><span class="mord mathnormal" style="margin-right:0.04398em;">z</span><span class=mord >∣</span><span class="mord mathnormal">x</span><span class=mclose >)</span></span></span></span> represents the approximate posterior distribution over latent variables <span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>z</mi></mrow><annotation encoding="application/x-tex">z</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.04398em;">z</span></span></span></span> given input data <span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:0.4306em;"></span><span class="mord mathnormal">x</span></span></span></span> </p>
+
+<li><p><span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi><mo stretchy=false >(</mo><mi>x</mi><mo separator=true >,</mo><mi>z</mi><mo stretchy=false >)</mo></mrow><annotation encoding="application/x-tex">p(x, z)</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">p</span><span class=mopen >(</span><span class="mord mathnormal">x</span><span class=mpunct >,</span><span class=mspace  style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.04398em;">z</span><span class=mclose >)</span></span></span></span> is the joint distribution of the observed data <span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:0.4306em;"></span><span class="mord mathnormal">x</span></span></span></span> and the latent variables <span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>z</mi></mrow><annotation encoding="application/x-tex">z</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.04398em;">z</span></span></span></span> - it&#39;s essentially the likelihood of generating the observed documents given the latent variables - it quantifies how likely it is to see a particular set of documents along with their associated latent representations.</p>
+
+<li><p><span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi><mo stretchy=false >(</mo><mi>z</mi><mo stretchy=false >)</mo></mrow><annotation encoding="application/x-tex">p(z)</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">p</span><span class=mopen >(</span><span class="mord mathnormal" style="margin-right:0.04398em;">z</span><span class=mclose >)</span></span></span></span> is the prior distribution over latent variables - in the context of document clustering, it can represent the prior distribution of topics over documents, capturing assumptions about the distribution of topics in the dataset.</p>
+
+<li><p>The expectation <span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi mathvariant=double-struck >E</mi><mrow><mi>q</mi><mo stretchy=false >(</mo><mi>z</mi><mi mathvariant=normal >∣</mi><mi>x</mi><mo stretchy=false >)</mo></mrow></msub><mo stretchy=false >[</mo><mo>⋅</mo><mo stretchy=false >]</mo></mrow><annotation encoding="application/x-tex">\mathbb{E}_{q(z|x)}[\cdot]</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:1.1052em;vertical-align:-0.3552em;"></span><span class=mord ><span class="mord mathbb">E</span><span class=msupsub ><span class="vlist-t vlist-t2"><span class=vlist-r ><span class=vlist  style="height:0.3448em;"><span style="top:-2.5198em;margin-left:0em;margin-right:0.05em;"><span class=pstrut  style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.03588em;">q</span><span class="mopen mtight">(</span><span class="mord mathnormal mtight" style="margin-right:0.04398em;">z</span><span class="mord mtight">∣</span><span class="mord mathnormal mtight">x</span><span class="mclose mtight">)</span></span></span></span></span><span class=vlist-s >​</span></span><span class=vlist-r ><span class=vlist  style="height:0.3552em;"><span></span></span></span></span></span></span><span class=mopen >[</span><span class=mord >⋅</span><span class=mclose >]</span></span></span></span> is taken with respect to the approximate posterior <span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>q</mi><mo stretchy=false >(</mo><mi>z</mi><mi mathvariant=normal >∣</mi><mi>x</mi><mo stretchy=false >)</mo></mrow><annotation encoding="application/x-tex">q(z|x)</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">q</span><span class=mopen >(</span><span class="mord mathnormal" style="margin-right:0.04398em;">z</span><span class=mord >∣</span><span class="mord mathnormal">x</span><span class=mclose >)</span></span></span></span>.</p>
+
+<li><p>The ELBO is the lower bound on the log-likelihood of the observed data <span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:0.4306em;"></span><span class="mord mathnormal">x</span></span></span></span>, and maximizing it is equivalent to minimizing the KL divergence between the approximate posterior <span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>q</mi><mo stretchy=false >(</mo><mi>z</mi><mi mathvariant=normal >∣</mi><mi>x</mi><mo stretchy=false >)</mo></mrow><annotation encoding="application/x-tex">q(z|x)</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">q</span><span class=mopen >(</span><span class="mord mathnormal" style="margin-right:0.04398em;">z</span><span class=mord >∣</span><span class="mord mathnormal">x</span><span class=mclose >)</span></span></span></span> and the true prior <span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi><mo stretchy=false >(</mo><mi>z</mi><mo stretchy=false >)</mo></mrow><annotation encoding="application/x-tex">p(z)</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">p</span><span class=mopen >(</span><span class="mord mathnormal" style="margin-right:0.04398em;">z</span><span class=mclose >)</span></span></span></span>.</p>
+
+</ul>
+<p>We set the variational family to be the mean-field family, meaning the latent variables factorize over documents, topics ,and authors :</p>
+<span class=katex-display ><span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML" display=block ><semantics><mrow><msub><mi>q</mi><mi>ϕ</mi></msub><mo stretchy=false >(</mo><mi>θ</mi><mo separator=true >,</mo><mi>β</mi><mo separator=true >,</mo><mi>η</mi><mo separator=true >,</mo><mi>x</mi><mo stretchy=false >)</mo><mo>=</mo><munder><mo>∏</mo><mrow><mi>d</mi><mo separator=true >,</mo><mi>k</mi><mo separator=true >,</mo><mi>s</mi></mrow></munder><mi>q</mi><mo stretchy=false >(</mo><msub><mi>θ</mi><mi>d</mi></msub><mo stretchy=false >)</mo><mi>q</mi><mo stretchy=false >(</mo><msub><mi>β</mi><mi>k</mi></msub><mo stretchy=false >)</mo><mi>q</mi><mo stretchy=false >(</mo><msub><mi>η</mi><mi>k</mi></msub><mo stretchy=false >)</mo><mi>q</mi><mo stretchy=false >(</mo><msub><mi>x</mi><mi>s</mi></msub><mo stretchy=false >)</mo></mrow><annotation encoding="application/x-tex"> q_\phi(\theta, \beta, \eta, x) = \prod_{d,k,s} q(\theta_d)q(\beta_k)q(\eta_k)q(x_s) </annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:1.0361em;vertical-align:-0.2861em;"></span><span class=mord ><span class="mord mathnormal" style="margin-right:0.03588em;">q</span><span class=msupsub ><span class="vlist-t vlist-t2"><span class=vlist-r ><span class=vlist  style="height:0.3361em;"><span style="top:-2.55em;margin-left:-0.0359em;margin-right:0.05em;"><span class=pstrut  style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">ϕ</span></span></span></span><span class=vlist-s >​</span></span><span class=vlist-r ><span class=vlist  style="height:0.2861em;"><span></span></span></span></span></span></span><span class=mopen >(</span><span class="mord mathnormal" style="margin-right:0.02778em;">θ</span><span class=mpunct >,</span><span class=mspace  style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.05278em;">β</span><span class=mpunct >,</span><span class=mspace  style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">η</span><span class=mpunct >,</span><span class=mspace  style="margin-right:0.1667em;"></span><span class="mord mathnormal">x</span><span class=mclose >)</span><span class=mspace  style="margin-right:0.2778em;"></span><span class=mrel >=</span><span class=mspace  style="margin-right:0.2778em;"></span></span><span class=base ><span class=strut  style="height:2.4882em;vertical-align:-1.4382em;"></span><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class=vlist-r ><span class=vlist  style="height:1.05em;"><span style="top:-1.8479em;margin-left:0em;"><span class=pstrut  style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">d</span><span class="mpunct mtight">,</span><span class="mord mathnormal mtight" style="margin-right:0.03148em;">k</span><span class="mpunct mtight">,</span><span class="mord mathnormal mtight">s</span></span></span></span><span style="top:-3.05em;"><span class=pstrut  style="height:3.05em;"></span><span><span class="mop op-symbol large-op">∏</span></span></span></span><span class=vlist-s >​</span></span><span class=vlist-r ><span class=vlist  style="height:1.4382em;"><span></span></span></span></span></span><span class=mspace  style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">q</span><span class=mopen >(</span><span class=mord ><span class="mord mathnormal" style="margin-right:0.02778em;">θ</span><span class=msupsub ><span class="vlist-t vlist-t2"><span class=vlist-r ><span class=vlist  style="height:0.3361em;"><span style="top:-2.55em;margin-left:-0.0278em;margin-right:0.05em;"><span class=pstrut  style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">d</span></span></span></span><span class=vlist-s >​</span></span><span class=vlist-r ><span class=vlist  style="height:0.15em;"><span></span></span></span></span></span></span><span class=mclose >)</span><span class="mord mathnormal" style="margin-right:0.03588em;">q</span><span class=mopen >(</span><span class=mord ><span class="mord mathnormal" style="margin-right:0.05278em;">β</span><span class=msupsub ><span class="vlist-t vlist-t2"><span class=vlist-r ><span class=vlist  style="height:0.3361em;"><span style="top:-2.55em;margin-left:-0.0528em;margin-right:0.05em;"><span class=pstrut  style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.03148em;">k</span></span></span></span><span class=vlist-s >​</span></span><span class=vlist-r ><span class=vlist  style="height:0.15em;"><span></span></span></span></span></span></span><span class=mclose >)</span><span class="mord mathnormal" style="margin-right:0.03588em;">q</span><span class=mopen >(</span><span class=mord ><span class="mord mathnormal" style="margin-right:0.03588em;">η</span><span class=msupsub ><span class="vlist-t vlist-t2"><span class=vlist-r ><span class=vlist  style="height:0.3361em;"><span style="top:-2.55em;margin-left:-0.0359em;margin-right:0.05em;"><span class=pstrut  style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.03148em;">k</span></span></span></span><span class=vlist-s >​</span></span><span class=vlist-r ><span class=vlist  style="height:0.15em;"><span></span></span></span></span></span></span><span class=mclose >)</span><span class="mord mathnormal" style="margin-right:0.03588em;">q</span><span class=mopen >(</span><span class=mord ><span class="mord mathnormal">x</span><span class=msupsub ><span class="vlist-t vlist-t2"><span class=vlist-r ><span class=vlist  style="height:0.1514em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class=pstrut  style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">s</span></span></span></span><span class=vlist-s >​</span></span><span class=vlist-r ><span class=vlist  style="height:0.15em;"><span></span></span></span></span></span></span><span class=mclose >)</span></span></span></span></span>
+<p>We use lognormal factors for the positive variables and Gaussian factors for the real variables:</p>
+<span class=katex-display ><span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML" display=block ><semantics><mrow><mi>q</mi><mo stretchy=false >(</mo><msub><mi>θ</mi><mi>d</mi></msub><mo stretchy=false >)</mo><mo>=</mo><msub><mtext>LogNormal</mtext><mi>K</mi></msub><mo stretchy=false >(</mo><msub><mi>μ</mi><msub><mi>θ</mi><mi>d</mi></msub></msub><msubsup><mi>σ</mi><msub><mi>θ</mi><mi>d</mi></msub><mn>2</mn></msubsup><mo stretchy=false >)</mo></mrow><annotation encoding="application/x-tex">q(\theta_d) = \text{LogNormal}_K(\mu_{\theta_d}\sigma^2_{\theta_d})</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">q</span><span class=mopen >(</span><span class=mord ><span class="mord mathnormal" style="margin-right:0.02778em;">θ</span><span class=msupsub ><span class="vlist-t vlist-t2"><span class=vlist-r ><span class=vlist  style="height:0.3361em;"><span style="top:-2.55em;margin-left:-0.0278em;margin-right:0.05em;"><span class=pstrut  style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">d</span></span></span></span><span class=vlist-s >​</span></span><span class=vlist-r ><span class=vlist  style="height:0.15em;"><span></span></span></span></span></span></span><span class=mclose >)</span><span class=mspace  style="margin-right:0.2778em;"></span><span class=mrel >=</span><span class=mspace  style="margin-right:0.2778em;"></span></span><span class=base ><span class=strut  style="height:1.217em;vertical-align:-0.3529em;"></span><span class=mord ><span class="mord text"><span class=mord >LogNormal</span></span><span class=msupsub ><span class="vlist-t vlist-t2"><span class=vlist-r ><span class=vlist  style="height:0.2342em;"><span style="top:-2.4559em;margin-right:0.05em;"><span class=pstrut  style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.07153em;">K</span></span></span></span><span class=vlist-s >​</span></span><span class=vlist-r ><span class=vlist  style="height:0.2441em;"><span></span></span></span></span></span></span><span class=mopen >(</span><span class=mord ><span class="mord mathnormal">μ</span><span class=msupsub ><span class="vlist-t vlist-t2"><span class=vlist-r ><span class=vlist  style="height:0.3361em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class=pstrut  style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.02778em;">θ</span><span class=msupsub ><span class="vlist-t vlist-t2"><span class=vlist-r ><span class=vlist  style="height:0.3448em;"><span style="top:-2.3488em;margin-left:-0.0278em;margin-right:0.0714em;"><span class=pstrut  style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mathnormal mtight">d</span></span></span></span><span class=vlist-s >​</span></span><span class=vlist-r ><span class=vlist  style="height:0.1512em;"><span></span></span></span></span></span></span></span></span></span></span><span class=vlist-s >​</span></span><span class=vlist-r ><span class=vlist  style="height:0.2559em;"><span></span></span></span></span></span></span><span class=mord ><span class="mord mathnormal" style="margin-right:0.03588em;">σ</span><span class=msupsub ><span class="vlist-t vlist-t2"><span class=vlist-r ><span class=vlist  style="height:0.8641em;"><span style="top:-2.453em;margin-left:-0.0359em;margin-right:0.05em;"><span class=pstrut  style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.02778em;">θ</span><span class=msupsub ><span class="vlist-t vlist-t2"><span class=vlist-r ><span class=vlist  style="height:0.3448em;"><span style="top:-2.3488em;margin-left:-0.0278em;margin-right:0.0714em;"><span class=pstrut  style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mathnormal mtight">d</span></span></span></span><span class=vlist-s >​</span></span><span class=vlist-r ><span class=vlist  style="height:0.1512em;"><span></span></span></span></span></span></span></span></span></span><span style="top:-3.113em;margin-right:0.05em;"><span class=pstrut  style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class=vlist-s >​</span></span><span class=vlist-r ><span class=vlist  style="height:0.3529em;"><span></span></span></span></span></span></span><span class=mclose >)</span></span></span></span></span>
+<span class=katex-display ><span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML" display=block ><semantics><mrow><mi>q</mi><mo stretchy=false >(</mo><msub><mi>β</mi><mi>k</mi></msub><mo stretchy=false >)</mo><mo>=</mo><msub><mtext>LogNormal</mtext><mi>V</mi></msub><mo stretchy=false >(</mo><msub><mi>μ</mi><msub><mi>β</mi><mi>k</mi></msub></msub><mo separator=true >,</mo><msubsup><mi>σ</mi><msub><mi>β</mi><mi>k</mi></msub><mn>2</mn></msubsup><mo stretchy=false >)</mo></mrow><annotation encoding="application/x-tex">q(\beta_k) = \text{LogNormal}_V(\mu_{\beta_k}, \sigma^2_{\beta_k})</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">q</span><span class=mopen >(</span><span class=mord ><span class="mord mathnormal" style="margin-right:0.05278em;">β</span><span class=msupsub ><span class="vlist-t vlist-t2"><span class=vlist-r ><span class=vlist  style="height:0.3361em;"><span style="top:-2.55em;margin-left:-0.0528em;margin-right:0.05em;"><span class=pstrut  style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.03148em;">k</span></span></span></span><span class=vlist-s >​</span></span><span class=vlist-r ><span class=vlist  style="height:0.15em;"><span></span></span></span></span></span></span><span class=mclose >)</span><span class=mspace  style="margin-right:0.2778em;"></span><span class=mrel >=</span><span class=mspace  style="margin-right:0.2778em;"></span></span><span class=base ><span class=strut  style="height:1.2472em;vertical-align:-0.3831em;"></span><span class=mord ><span class="mord text"><span class=mord >LogNormal</span></span><span class=msupsub ><span class="vlist-t vlist-t2"><span class=vlist-r ><span class=vlist  style="height:0.2342em;"><span style="top:-2.4559em;margin-right:0.05em;"><span class=pstrut  style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.22222em;">V</span></span></span></span><span class=vlist-s >​</span></span><span class=vlist-r ><span class=vlist  style="height:0.2441em;"><span></span></span></span></span></span></span><span class=mopen >(</span><span class=mord ><span class="mord mathnormal">μ</span><span class=msupsub ><span class="vlist-t vlist-t2"><span class=vlist-r ><span class=vlist  style="height:0.3361em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class=pstrut  style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.05278em;">β</span><span class=msupsub ><span class="vlist-t vlist-t2"><span class=vlist-r ><span class=vlist  style="height:0.3448em;"><span style="top:-2.3488em;margin-left:-0.0528em;margin-right:0.0714em;"><span class=pstrut  style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mathnormal mtight" style="margin-right:0.03148em;">k</span></span></span></span><span class=vlist-s >​</span></span><span class=vlist-r ><span class=vlist  style="height:0.1512em;"><span></span></span></span></span></span></span></span></span></span></span><span class=vlist-s >​</span></span><span class=vlist-r ><span class=vlist  style="height:0.2861em;"><span></span></span></span></span></span></span><span class=mpunct >,</span><span class=mspace  style="margin-right:0.1667em;"></span><span class=mord ><span class="mord mathnormal" style="margin-right:0.03588em;">σ</span><span class=msupsub ><span class="vlist-t vlist-t2"><span class=vlist-r ><span class=vlist  style="height:0.8641em;"><span style="top:-2.453em;margin-left:-0.0359em;margin-right:0.05em;"><span class=pstrut  style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.05278em;">β</span><span class=msupsub ><span class="vlist-t vlist-t2"><span class=vlist-r ><span class=vlist  style="height:0.3448em;"><span style="top:-2.3488em;margin-left:-0.0528em;margin-right:0.0714em;"><span class=pstrut  style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mathnormal mtight" style="margin-right:0.03148em;">k</span></span></span></span><span class=vlist-s >​</span></span><span class=vlist-r ><span class=vlist  style="height:0.1512em;"><span></span></span></span></span></span></span></span></span></span><span style="top:-3.113em;margin-right:0.05em;"><span class=pstrut  style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class=vlist-s >​</span></span><span class=vlist-r ><span class=vlist  style="height:0.3831em;"><span></span></span></span></span></span></span><span class=mclose >)</span></span></span></span></span>
+<span class=katex-display ><span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML" display=block ><semantics><mrow><mi>q</mi><mo stretchy=false >(</mo><msub><mi>η</mi><mi>k</mi></msub><mo stretchy=false >)</mo><mo>=</mo><msub><mi mathvariant=script >N</mi><mi>V</mi></msub><mo stretchy=false >(</mo><msub><mi>μ</mi><msub><mi>η</mi><mi>k</mi></msub></msub><mo separator=true >,</mo><msubsup><mi>σ</mi><msub><mi>η</mi><mi>k</mi></msub><mn>2</mn></msubsup><mo stretchy=false >)</mo></mrow><annotation encoding="application/x-tex">q(\eta_k) = \mathcal{N}_V(\mu_{\eta_k}, \sigma^2_{\eta_k})</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">q</span><span class=mopen >(</span><span class=mord ><span class="mord mathnormal" style="margin-right:0.03588em;">η</span><span class=msupsub ><span class="vlist-t vlist-t2"><span class=vlist-r ><span class=vlist  style="height:0.3361em;"><span style="top:-2.55em;margin-left:-0.0359em;margin-right:0.05em;"><span class=pstrut  style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.03148em;">k</span></span></span></span><span class=vlist-s >​</span></span><span class=vlist-r ><span class=vlist  style="height:0.15em;"><span></span></span></span></span></span></span><span class=mclose >)</span><span class=mspace  style="margin-right:0.2778em;"></span><span class=mrel >=</span><span class=mspace  style="margin-right:0.2778em;"></span></span><span class=base ><span class=strut  style="height:1.2472em;vertical-align:-0.3831em;"></span><span class=mord ><span class="mord mathcal" style="margin-right:0.14736em;">N</span><span class=msupsub ><span class="vlist-t vlist-t2"><span class=vlist-r ><span class=vlist  style="height:0.3283em;"><span style="top:-2.55em;margin-left:-0.1474em;margin-right:0.05em;"><span class=pstrut  style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.22222em;">V</span></span></span></span><span class=vlist-s >​</span></span><span class=vlist-r ><span class=vlist  style="height:0.15em;"><span></span></span></span></span></span></span><span class=mopen >(</span><span class=mord ><span class="mord mathnormal">μ</span><span class=msupsub ><span class="vlist-t vlist-t2"><span class=vlist-r ><span class=vlist  style="height:0.1514em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class=pstrut  style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.03588em;">η</span><span class=msupsub ><span class="vlist-t vlist-t2"><span class=vlist-r ><span class=vlist  style="height:0.3448em;"><span style="top:-2.3488em;margin-left:-0.0359em;margin-right:0.0714em;"><span class=pstrut  style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mathnormal mtight" style="margin-right:0.03148em;">k</span></span></span></span><span class=vlist-s >​</span></span><span class=vlist-r ><span class=vlist  style="height:0.1512em;"><span></span></span></span></span></span></span></span></span></span></span><span class=vlist-s >​</span></span><span class=vlist-r ><span class=vlist  style="height:0.2861em;"><span></span></span></span></span></span></span><span class=mpunct >,</span><span class=mspace  style="margin-right:0.1667em;"></span><span class=mord ><span class="mord mathnormal" style="margin-right:0.03588em;">σ</span><span class=msupsub ><span class="vlist-t vlist-t2"><span class=vlist-r ><span class=vlist  style="height:0.8641em;"><span style="top:-2.453em;margin-left:-0.0359em;margin-right:0.05em;"><span class=pstrut  style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.03588em;">η</span><span class=msupsub ><span class="vlist-t vlist-t2"><span class=vlist-r ><span class=vlist  style="height:0.3448em;"><span style="top:-2.3488em;margin-left:-0.0359em;margin-right:0.0714em;"><span class=pstrut  style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mathnormal mtight" style="margin-right:0.03148em;">k</span></span></span></span><span class=vlist-s >​</span></span><span class=vlist-r ><span class=vlist  style="height:0.1512em;"><span></span></span></span></span></span></span></span></span></span><span style="top:-3.113em;margin-right:0.05em;"><span class=pstrut  style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class=vlist-s >​</span></span><span class=vlist-r ><span class=vlist  style="height:0.3831em;"><span></span></span></span></span></span></span><span class=mclose >)</span></span></span></span></span>
+<span class=katex-display ><span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML" display=block ><semantics><mrow><mi>q</mi><mo stretchy=false >(</mo><msub><mi>x</mi><mi>s</mi></msub><mo stretchy=false >)</mo><mo>=</mo><mi mathvariant=script >N</mi><mo stretchy=false >(</mo><msub><mi>μ</mi><msub><mi>x</mi><mi>s</mi></msub></msub><mo separator=true >,</mo><msubsup><mi>σ</mi><msub><mi>x</mi><mi>s</mi></msub><mn>2</mn></msubsup><mo stretchy=false >)</mo><mi mathvariant=normal >.</mi></mrow><annotation encoding="application/x-tex">q(x_s) = \mathcal{N}(\mu_{x_s}, \sigma^2_{x_s}).</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">q</span><span class=mopen >(</span><span class=mord ><span class="mord mathnormal">x</span><span class=msupsub ><span class="vlist-t vlist-t2"><span class=vlist-r ><span class=vlist  style="height:0.1514em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class=pstrut  style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">s</span></span></span></span><span class=vlist-s >​</span></span><span class=vlist-r ><span class=vlist  style="height:0.15em;"><span></span></span></span></span></span></span><span class=mclose >)</span><span class=mspace  style="margin-right:0.2778em;"></span><span class=mrel >=</span><span class=mspace  style="margin-right:0.2778em;"></span></span><span class=base ><span class=strut  style="height:1.2112em;vertical-align:-0.3471em;"></span><span class="mord mathcal" style="margin-right:0.14736em;">N</span><span class=mopen >(</span><span class=mord ><span class="mord mathnormal">μ</span><span class=msupsub ><span class="vlist-t vlist-t2"><span class=vlist-r ><span class=vlist  style="height:0.1514em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class=pstrut  style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathnormal mtight">x</span><span class=msupsub ><span class="vlist-t vlist-t2"><span class=vlist-r ><span class=vlist  style="height:0.1645em;"><span style="top:-2.357em;margin-left:0em;margin-right:0.0714em;"><span class=pstrut  style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mathnormal mtight">s</span></span></span></span><span class=vlist-s >​</span></span><span class=vlist-r ><span class=vlist  style="height:0.143em;"><span></span></span></span></span></span></span></span></span></span></span><span class=vlist-s >​</span></span><span class=vlist-r ><span class=vlist  style="height:0.2501em;"><span></span></span></span></span></span></span><span class=mpunct >,</span><span class=mspace  style="margin-right:0.1667em;"></span><span class=mord ><span class="mord mathnormal" style="margin-right:0.03588em;">σ</span><span class=msupsub ><span class="vlist-t vlist-t2"><span class=vlist-r ><span class=vlist  style="height:0.8641em;"><span style="top:-2.453em;margin-left:-0.0359em;margin-right:0.05em;"><span class=pstrut  style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathnormal mtight">x</span><span class=msupsub ><span class="vlist-t vlist-t2"><span class=vlist-r ><span class=vlist  style="height:0.1645em;"><span style="top:-2.357em;margin-left:0em;margin-right:0.0714em;"><span class=pstrut  style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mathnormal mtight">s</span></span></span></span><span class=vlist-s >​</span></span><span class=vlist-r ><span class=vlist  style="height:0.143em;"><span></span></span></span></span></span></span></span></span></span><span style="top:-3.113em;margin-right:0.05em;"><span class=pstrut  style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class=vlist-s >​</span></span><span class=vlist-r ><span class=vlist  style="height:0.3471em;"><span></span></span></span></span></span></span><span class=mclose >)</span><span class=mord >.</span></span></span></span></span>
+<p>Thus, our goal is to maximize the ELBO with respect to  </p>
+<span class=katex-display ><span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML" display=block ><semantics><mrow><mi>ϕ</mi><mo>=</mo><mo stretchy=false >{</mo><msub><mi>μ</mi><mi>θ</mi></msub><mo separator=true >,</mo><msub><mi>σ</mi><mi>θ</mi></msub><mo separator=true >,</mo><msub><mi>μ</mi><mi>β</mi></msub><mo separator=true >,</mo><msub><mi>σ</mi><mi>β</mi></msub><mo separator=true >,</mo><msub><mi>μ</mi><mi>η</mi></msub><mo separator=true >,</mo><msub><mi>σ</mi><mi>η</mi></msub><mo separator=true >,</mo><msub><mi>μ</mi><mi>x</mi></msub><mo separator=true >,</mo><msub><mi>σ</mi><mi>x</mi></msub><mo stretchy=false >}</mo></mrow><annotation encoding="application/x-tex">\phi = \{\mu_\theta, \sigma_\theta, \mu_\beta, \sigma_\beta,\mu_\eta, \sigma_\eta, \mu_x, \sigma_x\}</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">ϕ</span><span class=mspace  style="margin-right:0.2778em;"></span><span class=mrel >=</span><span class=mspace  style="margin-right:0.2778em;"></span></span><span class=base ><span class=strut  style="height:1.0361em;vertical-align:-0.2861em;"></span><span class=mopen >{</span><span class=mord ><span class="mord mathnormal">μ</span><span class=msupsub ><span class="vlist-t vlist-t2"><span class=vlist-r ><span class=vlist  style="height:0.3361em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class=pstrut  style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.02778em;">θ</span></span></span></span><span class=vlist-s >​</span></span><span class=vlist-r ><span class=vlist  style="height:0.15em;"><span></span></span></span></span></span></span><span class=mpunct >,</span><span class=mspace  style="margin-right:0.1667em;"></span><span class=mord ><span class="mord mathnormal" style="margin-right:0.03588em;">σ</span><span class=msupsub ><span class="vlist-t vlist-t2"><span class=vlist-r ><span class=vlist  style="height:0.3361em;"><span style="top:-2.55em;margin-left:-0.0359em;margin-right:0.05em;"><span class=pstrut  style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.02778em;">θ</span></span></span></span><span class=vlist-s >​</span></span><span class=vlist-r ><span class=vlist  style="height:0.15em;"><span></span></span></span></span></span></span><span class=mpunct >,</span><span class=mspace  style="margin-right:0.1667em;"></span><span class=mord ><span class="mord mathnormal">μ</span><span class=msupsub ><span class="vlist-t vlist-t2"><span class=vlist-r ><span class=vlist  style="height:0.3361em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class=pstrut  style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.05278em;">β</span></span></span></span><span class=vlist-s >​</span></span><span class=vlist-r ><span class=vlist  style="height:0.2861em;"><span></span></span></span></span></span></span><span class=mpunct >,</span><span class=mspace  style="margin-right:0.1667em;"></span><span class=mord ><span class="mord mathnormal" style="margin-right:0.03588em;">σ</span><span class=msupsub ><span class="vlist-t vlist-t2"><span class=vlist-r ><span class=vlist  style="height:0.3361em;"><span style="top:-2.55em;margin-left:-0.0359em;margin-right:0.05em;"><span class=pstrut  style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.05278em;">β</span></span></span></span><span class=vlist-s >​</span></span><span class=vlist-r ><span class=vlist  style="height:0.2861em;"><span></span></span></span></span></span></span><span class=mpunct >,</span><span class=mspace  style="margin-right:0.1667em;"></span><span class=mord ><span class="mord mathnormal">μ</span><span class=msupsub ><span class="vlist-t vlist-t2"><span class=vlist-r ><span class=vlist  style="height:0.1514em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class=pstrut  style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.03588em;">η</span></span></span></span><span class=vlist-s >​</span></span><span class=vlist-r ><span class=vlist  style="height:0.2861em;"><span></span></span></span></span></span></span><span class=mpunct >,</span><span class=mspace  style="margin-right:0.1667em;"></span><span class=mord ><span class="mord mathnormal" style="margin-right:0.03588em;">σ</span><span class=msupsub ><span class="vlist-t vlist-t2"><span class=vlist-r ><span class=vlist  style="height:0.1514em;"><span style="top:-2.55em;margin-left:-0.0359em;margin-right:0.05em;"><span class=pstrut  style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.03588em;">η</span></span></span></span><span class=vlist-s >​</span></span><span class=vlist-r ><span class=vlist  style="height:0.2861em;"><span></span></span></span></span></span></span><span class=mpunct >,</span><span class=mspace  style="margin-right:0.1667em;"></span><span class=mord ><span class="mord mathnormal">μ</span><span class=msupsub ><span class="vlist-t vlist-t2"><span class=vlist-r ><span class=vlist  style="height:0.1514em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class=pstrut  style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">x</span></span></span></span><span class=vlist-s >​</span></span><span class=vlist-r ><span class=vlist  style="height:0.15em;"><span></span></span></span></span></span></span><span class=mpunct >,</span><span class=mspace  style="margin-right:0.1667em;"></span><span class=mord ><span class="mord mathnormal" style="margin-right:0.03588em;">σ</span><span class=msupsub ><span class="vlist-t vlist-t2"><span class=vlist-r ><span class=vlist  style="height:0.1514em;"><span style="top:-2.55em;margin-left:-0.0359em;margin-right:0.05em;"><span class=pstrut  style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">x</span></span></span></span><span class=vlist-s >​</span></span><span class=vlist-r ><span class=vlist  style="height:0.15em;"><span></span></span></span></span></span></span><span class=mclose >}</span></span></span></span></span>
+<pre><code class="python hljs">In the cell below, we define the model <span class=hljs-keyword >and</span> the variational family (guide).
+
+<span class=hljs-keyword >from</span> numpyro <span class=hljs-keyword >import</span> plate, sample, param
+<span class=hljs-keyword >import</span> numpyro.distributions <span class=hljs-keyword >as</span> dist
+<span class=hljs-keyword >from</span> numpyro.distributions <span class=hljs-keyword >import</span> constraints
+
+<span class=hljs-comment ># Define the model and variational family</span>
+
+
+<span class=hljs-keyword >class</span> <span class="hljs-title class_">TBIP</span>:
+    <span class=hljs-keyword >def</span> <span class="hljs-title function_">__init__</span>(<span class=hljs-params >self, N, D, K, V, batch_size, init_mu_theta=<span class=hljs-literal >None</span>, init_mu_beta=<span class=hljs-literal >None</span></span>):
+        <span class="hljs-variable language_">self</span>.N = N  <span class=hljs-comment ># number of people</span>
+        <span class="hljs-variable language_">self</span>.D = D  <span class=hljs-comment ># number of documents</span>
+        <span class="hljs-variable language_">self</span>.K = K  <span class=hljs-comment ># number of topics</span>
+        <span class="hljs-variable language_">self</span>.V = V  <span class=hljs-comment ># number of words in vocabulary</span>
+        <span class="hljs-variable language_">self</span>.batch_size = batch_size  <span class=hljs-comment ># number of documents in a batch</span>
+
+        <span class=hljs-keyword >if</span> init_mu_theta <span class=hljs-keyword >is</span> <span class=hljs-literal >None</span>:
+            init_mu_theta = jnp.zeros([D, K])
+        <span class=hljs-keyword >else</span>:
+            <span class="hljs-variable language_">self</span>.init_mu_theta = init_mu_theta
+
+        <span class=hljs-keyword >if</span> init_mu_beta <span class=hljs-keyword >is</span> <span class=hljs-literal >None</span>:
+            init_mu_beta = jnp.zeros([K, V])
+        <span class=hljs-keyword >else</span>:
+            <span class="hljs-variable language_">self</span>.init_mu_beta = init_mu_beta
+
+    <span class=hljs-keyword >def</span> <span class="hljs-title function_">model</span>(<span class=hljs-params >self, Y_batch, d_batch, i_batch</span>):
+        <span class=hljs-keyword >with</span> plate(<span class=hljs-string >&quot;i&quot;</span>, <span class="hljs-variable language_">self</span>.N):
+            <span class=hljs-comment ># Sample the per-unit latent variables (ideal points)</span>
+            x = sample(<span class=hljs-string >&quot;x&quot;</span>, dist.Normal())
+
+        <span class=hljs-keyword >with</span> plate(<span class=hljs-string >&quot;k&quot;</span>, size=<span class="hljs-variable language_">self</span>.K, dim=-<span class=hljs-number >2</span>):
+            <span class=hljs-keyword >with</span> plate(<span class=hljs-string >&quot;k_v&quot;</span>, size=<span class="hljs-variable language_">self</span>.V, dim=-<span class=hljs-number >1</span>):
+                beta = sample(<span class=hljs-string >&quot;beta&quot;</span>, dist.Gamma(<span class=hljs-number >0.3</span>, <span class=hljs-number >0.3</span>))
+                eta = sample(<span class=hljs-string >&quot;eta&quot;</span>, dist.Normal())
+
+        <span class=hljs-keyword >with</span> plate(<span class=hljs-string >&quot;d&quot;</span>, size=<span class="hljs-variable language_">self</span>.D, subsample_size=<span class="hljs-variable language_">self</span>.batch_size, dim=-<span class=hljs-number >2</span>):
+            <span class=hljs-keyword >with</span> plate(<span class=hljs-string >&quot;d_k&quot;</span>, size=<span class="hljs-variable language_">self</span>.K, dim=-<span class=hljs-number >1</span>):
+                <span class=hljs-comment ># Sample document-level latent variables (topic intensities)</span>
+                theta = sample(<span class=hljs-string >&quot;theta&quot;</span>, dist.Gamma(<span class=hljs-number >0.3</span>, <span class=hljs-number >0.3</span>))
+
+            <span class=hljs-comment ># Compute Poisson rates for each word</span>
+            P = jnp.<span class=hljs-built_in >sum</span>(
+                jnp.expand_dims(theta, <span class=hljs-number >2</span>)
+                * jnp.expand_dims(beta, <span class=hljs-number >0</span>)
+                * jnp.exp(
+                    jnp.expand_dims(x[i_batch], (<span class=hljs-number >1</span>, <span class=hljs-number >2</span>)) * 
+                    jnp.expand_dims(eta, <span class=hljs-number >0</span>)
+                ),
+                <span class=hljs-number >1</span>,
+            )
+
+        <span class=hljs-keyword >with</span> plate(<span class=hljs-string >&quot;v&quot;</span>, size=<span class="hljs-variable language_">self</span>.V, dim=-<span class=hljs-number >1</span>):
+            <span class=hljs-comment ># Sample observed words</span>
+            sample(<span class=hljs-string >&quot;Y_batch&quot;</span>, dist.Poisson(P), obs=Y_batch)
+
+    <span class=hljs-keyword >def</span> <span class="hljs-title function_">guide</span>(<span class=hljs-params >self, Y_batch, d_batch, i_batch</span>):
+        <span class=hljs-comment ># This defines variational family. Notice that each of the latent variables</span>
+        <span class=hljs-comment ># defined in the sample statements in the model above has a corresponding</span>
+        <span class=hljs-comment ># sample statement in the guide. The guide is responsible for providing</span>
+        <span class=hljs-comment ># variational parameters for each of these latent variables.</span>
+
+        <span class=hljs-comment ># Also notice it is required that model and the guide have the same call.</span>
+
+        mu_x = param(
+            <span class=hljs-string >&quot;mu_x&quot;</span>, init_value=-<span class=hljs-number >1</span> + <span class=hljs-number >2</span> * random.uniform(random.PRNGKey(<span class=hljs-number >1</span>), (<span class="hljs-variable language_">self</span>.N,))
+        )
+        sigma_x = param(
+            <span class=hljs-string >&quot;sigma_y&quot;</span>, init_value=jnp.ones([<span class="hljs-variable language_">self</span>.N]), constraint=constraints.positive
+        )
+
+        mu_eta = param(
+            <span class=hljs-string >&quot;mu_eta&quot;</span>, init_value=random.normal(random.PRNGKey(<span class=hljs-number >2</span>), (<span class="hljs-variable language_">self</span>.K, <span class="hljs-variable language_">self</span>.V))
+        )
+        sigma_eta = param(
+            <span class=hljs-string >&quot;sigma_eta&quot;</span>,
+            init_value=jnp.ones([<span class="hljs-variable language_">self</span>.K, <span class="hljs-variable language_">self</span>.V]),
+            constraint=constraints.positive,
+        )
+
+        mu_theta = param(<span class=hljs-string >&quot;mu_theta&quot;</span>, init_value=<span class="hljs-variable language_">self</span>.init_mu_theta)
+        sigma_theta = param(
+            <span class=hljs-string >&quot;sigma_theta&quot;</span>,
+            init_value=jnp.ones([<span class="hljs-variable language_">self</span>.D, <span class="hljs-variable language_">self</span>.K]),
+            constraint=constraints.positive,
+        )
+
+        mu_beta = param(<span class=hljs-string >&quot;mu_beta&quot;</span>, init_value=<span class="hljs-variable language_">self</span>.init_mu_beta)
+        sigma_beta = param(
+            <span class=hljs-string >&quot;sigma_beta&quot;</span>,
+            init_value=jnp.ones([<span class="hljs-variable language_">self</span>.K, <span class="hljs-variable language_">self</span>.V]),
+            constraint=constraints.positive,
+        )
+
+        <span class=hljs-keyword >with</span> plate(<span class=hljs-string >&quot;i&quot;</span>, <span class="hljs-variable language_">self</span>.N):
+            sample(<span class=hljs-string >&quot;x&quot;</span>, dist.Normal(mu_x, sigma_x))
+
+        <span class=hljs-keyword >with</span> plate(<span class=hljs-string >&quot;k&quot;</span>, size=<span class="hljs-variable language_">self</span>.K, dim=-<span class=hljs-number >2</span>):
+            <span class=hljs-keyword >with</span> plate(<span class=hljs-string >&quot;k_v&quot;</span>, size=<span class="hljs-variable language_">self</span>.V, dim=-<span class=hljs-number >1</span>):
+                sample(<span class=hljs-string >&quot;beta&quot;</span>, dist.LogNormal(mu_beta, sigma_beta))
+                sample(<span class=hljs-string >&quot;eta&quot;</span>, dist.Normal(mu_eta, sigma_eta))
+
+        <span class=hljs-keyword >with</span> plate(<span class=hljs-string >&quot;d&quot;</span>, size=<span class="hljs-variable language_">self</span>.D, subsample_size=<span class="hljs-variable language_">self</span>.batch_size, dim=-<span class=hljs-number >2</span>):
+            <span class=hljs-keyword >with</span> plate(<span class=hljs-string >&quot;d_k&quot;</span>, size=<span class="hljs-variable language_">self</span>.K, dim=-<span class=hljs-number >1</span>):
+                sample(<span class=hljs-string >&quot;theta&quot;</span>, dist.LogNormal(mu_theta[d_batch], sigma_theta[d_batch]))
+
+    <span class=hljs-keyword >def</span> <span class="hljs-title function_">get_batch</span>(<span class=hljs-params >self, rng, Y, author_indices</span>):
+        <span class=hljs-comment ># Helper functions to obtain a batch of data, convert from scipy.sparse</span>
+        <span class=hljs-comment ># to jax.numpy.array and move to gpu</span>
+
+        D_batch = random.choice(rng, jnp.arange(<span class="hljs-variable language_">self</span>.D), shape=(<span class="hljs-variable language_">self</span>.batch_size,))
+        Y_batch = jax.device_put(jnp.array(Y[D_batch].toarray()), jax.devices(<span class=hljs-string >&quot;gpu&quot;</span>)[<span class=hljs-number >0</span>])
+        D_batch = jax.device_put(D_batch, jax.devices(<span class=hljs-string >&quot;gpu&quot;</span>)[<span class=hljs-number >0</span>])
+        I_batch = author_indices[D_batch]
+        <span class=hljs-keyword >return</span> Y_batch, I_batch, D_batch</code></pre>
+<pre><code class="python hljs"><span class=hljs-comment ># Initialize the model</span>
+<span class=hljs-keyword >from</span> optax <span class=hljs-keyword >import</span> adam, exponential_decay
+<span class=hljs-keyword >from</span> numpyro.infer <span class=hljs-keyword >import</span> SVI, TraceMeanField_ELBO
+<span class=hljs-keyword >from</span> jax <span class=hljs-keyword >import</span> jit
+
+num_steps = <span class=hljs-number >50000</span>
+batch_size = <span class=hljs-number >512</span>  <span class=hljs-comment ># Large batches are recommended</span>
+learning_rate = <span class=hljs-number >0.01</span>
+decay_rate = <span class=hljs-number >0.01</span>
+
+tbip = TBIP(
+    N=num_authors,
+    D=num_documents,
+    K=num_topics,
+    V=num_words,
+    batch_size=batch_size,
+    init_mu_theta=initial_document_loc,
+    init_mu_beta=initial_objective_topic_loc,
+)
+
+svi_batch = SVI(
+    model=tbip.model,
+    guide=tbip.guide,
+    optim=adam(exponential_decay(learning_rate, num_steps, decay_rate)),
+    loss=TraceMeanField_ELBO(),
+)
+
+<span class=hljs-comment ># Compile update function for faster training</span>
+svi_batch_update = jit(svi_batch.update)
+
+<span class=hljs-comment ># Get initial batch. This informs the dimension of arrays and ensures they are</span>
+<span class=hljs-comment ># consistent with dimensions (N, D, K, V) defined above.</span>
+Y_batch, I_batch, D_batch = tbip.get_batch(random.PRNGKey(<span class=hljs-number >1</span>), counts, author_indices)
+
+<span class=hljs-comment ># Initialize the parameters using initial batch</span>
+svi_state = svi_batch.init(
+    random.PRNGKey(<span class=hljs-number >0</span>), Y_batch=Y_batch, d_batch=D_batch, i_batch=I_batch
+)</code></pre>
+<pre><code class="python hljs"><span class=hljs-comment ># @title Run this cell to create helper function for printing topics</span>
+
+
+<span class=hljs-keyword >def</span> <span class="hljs-title function_">get_topics</span>(<span class=hljs-params >
+    neutral_mean, negative_mean, positive_mean, vocabulary, print_to_terminal=<span class=hljs-literal >True</span>
+</span>):
+    num_topics, num_words = neutral_mean.shape
+    words_per_topic = <span class=hljs-number >10</span>
+    top_neutral_words = np.argsort(-neutral_mean, axis=<span class=hljs-number >1</span>)
+    top_negative_words = np.argsort(-negative_mean, axis=<span class=hljs-number >1</span>)
+    top_positive_words = np.argsort(-positive_mean, axis=<span class=hljs-number >1</span>)
+    topic_strings = []
+    <span class=hljs-keyword >for</span> topic_idx <span class=hljs-keyword >in</span> <span class=hljs-built_in >range</span>(num_topics):
+        neutral_start_string = <span class=hljs-string >&quot;Neutral  {}:&quot;</span>.<span class=hljs-built_in >format</span>(topic_idx)
+        neutral_row = [
+            vocabulary[word] <span class=hljs-keyword >for</span> word <span class=hljs-keyword >in</span> top_neutral_words[topic_idx, :words_per_topic]
+        ]
+        neutral_row_string = <span class=hljs-string >&quot;, &quot;</span>.join(neutral_row)
+        neutral_string = <span class=hljs-string >&quot; &quot;</span>.join([neutral_start_string, neutral_row_string])
+
+        positive_start_string = <span class=hljs-string >&quot;Positive {}:&quot;</span>.<span class=hljs-built_in >format</span>(topic_idx)
+        positive_row = [
+            vocabulary[word] <span class=hljs-keyword >for</span> word <span class=hljs-keyword >in</span> top_positive_words[topic_idx, :words_per_topic]
+        ]
+        positive_row_string = <span class=hljs-string >&quot;, &quot;</span>.join(positive_row)
+        positive_string = <span class=hljs-string >&quot; &quot;</span>.join([positive_start_string, positive_row_string])
+
+        negative_start_string = <span class=hljs-string >&quot;Negative {}:&quot;</span>.<span class=hljs-built_in >format</span>(topic_idx)
+        negative_row = [
+            vocabulary[word] <span class=hljs-keyword >for</span> word <span class=hljs-keyword >in</span> top_negative_words[topic_idx, :words_per_topic]
+        ]
+        negative_row_string = <span class=hljs-string >&quot;, &quot;</span>.join(negative_row)
+        negative_string = <span class=hljs-string >&quot; &quot;</span>.join([negative_start_string, negative_row_string])
+
+        <span class=hljs-keyword >if</span> print_to_terminal:
+            topic_strings.append(negative_string)
+            topic_strings.append(neutral_string)
+            topic_strings.append(positive_string)
+            topic_strings.append(<span class=hljs-string >&quot;==========&quot;</span>)
+        <span class=hljs-keyword >else</span>:
+            topic_strings.append(
+                <span class=hljs-string >&quot;  \n&quot;</span>.join([negative_string, neutral_string, positive_string])
+            )
+
+    <span class=hljs-keyword >if</span> print_to_terminal:
+        all_topics = <span class=hljs-string >&quot;{}\n&quot;</span>.<span class=hljs-built_in >format</span>(np.array(topic_strings))
+    <span class=hljs-keyword >else</span>:
+        all_topics = np.array(topic_strings)
+    <span class=hljs-keyword >return</span> all_topics</code></pre>
+<pre><code class="python hljs"><span class=hljs-comment ># Run SVI</span>
+<span class=hljs-keyword >from</span> tqdm <span class=hljs-keyword >import</span> tqdm
+<span class=hljs-keyword >import</span> pandas <span class=hljs-keyword >as</span> pd
+
+print_steps = <span class=hljs-number >100</span>
+print_intermediate_results = <span class=hljs-literal >False</span>
+
+rngs = random.split(random.PRNGKey(<span class=hljs-number >2</span>), num_steps)
+losses = []
+pbar = tqdm(<span class=hljs-built_in >range</span>(num_steps))
+
+
+<span class=hljs-keyword >for</span> step <span class=hljs-keyword >in</span> pbar:
+    Y_batch, I_batch, D_batch = tbip.get_batch(rngs[step], counts, author_indices)
+    svi_state, loss = svi_batch_update(
+        svi_state, Y_batch=Y_batch, d_batch=D_batch, i_batch=I_batch
+    )
+
+    loss = loss / counts.shape[<span class=hljs-number >0</span>]
+    losses.append(loss)
+    <span class=hljs-keyword >if</span> step % print_steps == <span class=hljs-number >0</span> <span class=hljs-keyword >or</span> step == num_steps - <span class=hljs-number >1</span>:
+        pbar.set_description(
+            <span class=hljs-string >&quot;Init loss: &quot;</span>
+            + <span class=hljs-string >&quot;{:10.4f}&quot;</span>.<span class=hljs-built_in >format</span>(jnp.array(losses[<span class=hljs-number >0</span>]))
+            + <span class=hljs-string >f&quot;; Avg loss (last <span class=hljs-subst >{print_steps}</span> iter): &quot;</span>
+            + <span class=hljs-string >&quot;{:10.4f}&quot;</span>.<span class=hljs-built_in >format</span>(jnp.array(losses[-<span class=hljs-number >100</span>:]).mean())
+        )
+
+    <span class=hljs-keyword >if</span> (step + <span class=hljs-number >1</span>) % <span class=hljs-number >2500</span> == <span class=hljs-number >0</span> <span class=hljs-keyword >or</span> step == num_steps - <span class=hljs-number >1</span>:
+        <span class=hljs-comment ># Save intermediate results</span>
+        estimated_params = svi_batch.get_params(svi_state)
+
+        neutral_mean = (
+            estimated_params[<span class=hljs-string >&quot;mu_beta&quot;</span>] + estimated_params[<span class=hljs-string >&quot;sigma_beta&quot;</span>] ** <span class=hljs-number >2</span> / <span class=hljs-number >2</span>
+        )
+
+        positive_mean = (
+            estimated_params[<span class=hljs-string >&quot;mu_beta&quot;</span>]
+            + estimated_params[<span class=hljs-string >&quot;mu_eta&quot;</span>]
+            + (estimated_params[<span class=hljs-string >&quot;sigma_beta&quot;</span>] ** <span class=hljs-number >2</span> + estimated_params[<span class=hljs-string >&quot;sigma_eta&quot;</span>] ** <span class=hljs-number >2</span>)
+            / <span class=hljs-number >2</span>
+        )
+
+        negative_mean = (
+            estimated_params[<span class=hljs-string >&quot;mu_beta&quot;</span>]
+            - estimated_params[<span class=hljs-string >&quot;mu_eta&quot;</span>]
+            + (estimated_params[<span class=hljs-string >&quot;sigma_beta&quot;</span>] ** <span class=hljs-number >2</span> + estimated_params[<span class=hljs-string >&quot;sigma_eta&quot;</span>] ** <span class=hljs-number >2</span>)
+            / <span class=hljs-number >2</span>
+        )
+
+        np.save(<span class=hljs-string >&quot;neutral_topic_mean.npy&quot;</span>, neutral_mean)
+        np.save(<span class=hljs-string >&quot;negative_topic_mean.npy&quot;</span>, positive_mean)
+        np.save(<span class=hljs-string >&quot;positive_topic_mean.npy&quot;</span>, negative_mean)
+
+        topics = get_topics(neutral_mean, positive_mean, negative_mean, vocabulary)
+
+        <span class=hljs-keyword >with</span> <span class=hljs-built_in >open</span>(<span class=hljs-string >&quot;topics.txt&quot;</span>, <span class=hljs-string >&quot;w&quot;</span>) <span class=hljs-keyword >as</span> f:
+            <span class=hljs-built_in >print</span>(topics, file=f)
+
+        authors = pd.DataFrame(
+            {<span class=hljs-string >&quot;name&quot;</span>: author_map, <span class=hljs-string >&quot;ideal_point&quot;</span>: np.array(estimated_params[<span class=hljs-string >&quot;mu_x&quot;</span>])}
+        )
+        authors.to_csv(<span class=hljs-string >&quot;authors.csv&quot;</span>)
+
+        <span class=hljs-keyword >if</span> print_intermediate_results:
+            <span class=hljs-built_in >print</span>(<span class=hljs-string >f&quot;Results after <span class=hljs-subst >{step}</span> steps.&quot;</span>)
+            <span class=hljs-built_in >print</span>(topics)
+            sorted_authors = <span class=hljs-string >&quot;Authors sorted by their ideal points: &quot;</span> + <span class=hljs-string >&quot;,&quot;</span>.join(
+                <span class=hljs-built_in >list</span>(authors.sort_values(<span class=hljs-string >&quot;ideal_point&quot;</span>)[<span class=hljs-string >&quot;name&quot;</span>])
+            )
+            <span class=hljs-built_in >print</span>(sorted_authors.replace(<span class=hljs-string >&quot;\n&quot;</span>, <span class=hljs-string >&quot; &quot;</span>))</code></pre>
+<pre><code class="python hljs"><span class=hljs-keyword >import</span> os
+<span class=hljs-keyword >import</span> matplotlib.pyplot <span class=hljs-keyword >as</span> plt
+<span class=hljs-keyword >import</span> seaborn <span class=hljs-keyword >as</span> sns
+
+neutral_topic_mean = np.load(<span class=hljs-string >&quot;neutral_topic_mean.npy&quot;</span>)
+negative_topic_mean = np.load(<span class=hljs-string >&quot;negative_topic_mean.npy&quot;</span>)
+positive_topic_mean = np.load(<span class=hljs-string >&quot;positive_topic_mean.npy&quot;</span>)
+authors = pd.read_csv(<span class=hljs-string >&quot;authors.csv&quot;</span>)
+authors[<span class=hljs-string >&quot;name&quot;</span>] = authors[<span class=hljs-string >&quot;name&quot;</span>].<span class=hljs-built_in >str</span>.replace(<span class=hljs-string >&quot;\n&quot;</span>, <span class=hljs-string >&quot;&quot;</span>)</code></pre>
+<pre><code class="python hljs">selected_authors = np.array(
+    [
+        <span class=hljs-string >&quot;Dean Heller (R)&quot;</span>,
+        <span class=hljs-string >&quot;Bernard Sanders (I)&quot;</span>,
+        <span class=hljs-string >&quot;Elizabeth Warren (D)&quot;</span>,
+        <span class=hljs-string >&quot;Charles Schumer (D)&quot;</span>,
+        <span class=hljs-string >&quot;Susan Collins (R)&quot;</span>,
+        <span class=hljs-string >&quot;Marco Rubio (R)&quot;</span>,
+        <span class=hljs-string >&quot;John Mccain (R)&quot;</span>,
+        <span class=hljs-string >&quot;Ted Cruz (R)&quot;</span>,
+    ]
+)
+
+sns.<span class=hljs-built_in >set</span>(style=<span class=hljs-string >&quot;whitegrid&quot;</span>)
+fig = plt.figure(figsize=(<span class=hljs-number >12</span>, <span class=hljs-number >1</span>))
+ax = plt.axes([<span class=hljs-number >0</span>, <span class=hljs-number >0</span>, <span class=hljs-number >1</span>, <span class=hljs-number >1</span>], frameon=<span class=hljs-literal >False</span>)
+<span class=hljs-keyword >for</span> index <span class=hljs-keyword >in</span> <span class=hljs-built_in >range</span>(authors.shape[<span class=hljs-number >0</span>]):
+    ax.scatter(authors[<span class=hljs-string >&quot;ideal_point&quot;</span>][index], <span class=hljs-number >0</span>, c=<span class=hljs-string >&quot;black&quot;</span>, s=<span class=hljs-number >20</span>)
+    <span class=hljs-keyword >if</span> authors[<span class=hljs-string >&quot;name&quot;</span>][index] <span class=hljs-keyword >in</span> selected_authors:
+        ax.annotate(
+            author_map[index],
+            xy=(authors[<span class=hljs-string >&quot;ideal_point&quot;</span>][index], <span class=hljs-number >0.0</span>),
+            xytext=(authors[<span class=hljs-string >&quot;ideal_point&quot;</span>][index], <span class=hljs-number >0</span>),
+            rotation=<span class=hljs-number >30</span>,
+            size=<span class=hljs-number >14</span>,
+        )
+ax.set_yticks([])
+plt.show()</code></pre>
+<pre><code class="python hljs"><span class=hljs-keyword >from</span> numpyro.infer.autoguide <span class=hljs-keyword >import</span> AutoNormal
+
+
+<span class=hljs-keyword >def</span> <span class="hljs-title function_">create_svi_object</span>(<span class=hljs-params >guide</span>):
+    svi_object = SVI(
+        model=tbip.model,
+        guide=guide,
+        optim=adam(exponential_decay(learning_rate, num_steps, decay_rate)),
+        loss=TraceMeanField_ELBO(),
+    )
+
+    Y_batch, I_batch, D_batch = tbip.get_batch(
+        random.PRNGKey(<span class=hljs-number >1</span>), counts, author_indices
+    )
+
+    svi_state = svi_batch.init(
+        random.PRNGKey(<span class=hljs-number >0</span>), Y_batch=Y_batch, d_batch=D_batch, i_batch=I_batch
+    )
+
+    <span class=hljs-keyword >return</span> svi_state
+
+
+<span class=hljs-comment ># This state uses the guide defined manually above</span>
+svi_state_manualguide = create_svi_object(guide=tbip.guide)
+
+<span class=hljs-comment ># Now let&#x27;s create this object but using AutoNormal guide. We just need to ensure that</span>
+<span class=hljs-comment ># parameters are initialized as above.</span>
+autoguide = AutoNormal(
+    model=tbip.model,
+    init_loc_fn={<span class=hljs-string >&quot;beta&quot;</span>: initial_objective_topic_loc, <span class=hljs-string >&quot;theta&quot;</span>: initial_document_loc},
+)
+svi_state_autoguide = create_svi_object(guide=autoguide)
+
+
+<span class=hljs-comment ># Assert that the keys in the optimizer states are identical</span>
+<span class=hljs-keyword >assert</span> svi_state_manualguide[<span class=hljs-number >0</span>][<span class=hljs-number >1</span>][<span class=hljs-number >0</span>].keys() == svi_state_autoguide[<span class=hljs-number >0</span>][<span class=hljs-number >1</span>][<span class=hljs-number >0</span>].keys()
+
+<span class=hljs-comment ># Assert that the values in the optimizer states are identical</span>
+<span class=hljs-keyword >for</span> key <span class=hljs-keyword >in</span> svi_state_manualguide[<span class=hljs-number >0</span>][<span class=hljs-number >1</span>][<span class=hljs-number >0</span>].keys():
+    <span class=hljs-keyword >assert</span> jnp.<span class=hljs-built_in >all</span>(
+        svi_state_manualguide[<span class=hljs-number >0</span>][<span class=hljs-number >1</span>][<span class=hljs-number >0</span>][key] == svi_state_autoguide[<span class=hljs-number >0</span>][<span class=hljs-number >1</span>][<span class=hljs-number >0</span>][key])</code></pre>
+<div class=page-foot >
+    <div class=copyright >
+      <a href="https://github.com/shiyis/nlpwsys/tree/master"><b> This page is hosted on <img class=github-logo  src="https://unpkg.com/ionicons@5.1.2/dist/svg/logo-github.svg"></b></a>
+       ©️ Last modified: December 04, 2024. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>.
+    </div>
+  </div>
+  </div>
+    
+        
+
+
+
+    
+    
+        <script src="/nlpwme/libs/highlight/highlight.min.js"></script>
+<script>hljs.highlightAll();hljs.configure({tabReplace: '    '});</script>
