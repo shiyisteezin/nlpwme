@@ -1,0 +1,52 @@
+@@cards @@column
+@@row
+  \card{Noisy Channel Model}{
+
+  Shannon used metaphors like noisy channels and decoding to explain language transmission. He created the first probabilistic measurement of English entropy.
+
+  Instrumental phonetics and sound spectrograph laid the groundwork for speech recognition research.
+
+}
+@@
+
+@@row
+  \card{Foundational Insights: 1940s - 1950s}{
+ Chomsky's work on finite-state machines and grammar paved the way for formal language theory and transformational and context-free grammar.
+
+ Turing's work on computer science led to the development of propositional logic, regular expressions, and finite state automata.
+
+ Probabilistic models like Markov processes have significantly automated and formalized natural language processing, providing a probabilistic framework for understanding language structure.}
+@@
+
+
+@@row
+
+  \card{The Merging of Two Cultures}{
+_Language theory_: involves the study of parsing algorithms, formal language theory, and generative syntax. The Transformations and Discourse Analysis Project (TDAP) was one of the earliest complete parsing systems.
+
+_Artificial intelligence (AI)_: was coined in 1956 by John McCarthy, Marvin Minsky, Cloude Shannon, and Nathaniel Rochester. Early systems used keyboard searches, pattern matching, and basic reasoning. By the late 1960s, more formal logical systems had been developed.
+
+  }
+@@
+
+
+
+@@row
+\card{Paradigms Develop}{
+The Bayesian approach was used to address optical character recognition issues, with Bledsoe and Browning creating a text-recognition system using a large dictionary.
+
+Mosteller and Wallace addressed authorship attribution issues.
+
+The first online corpus was created in 1963-1964, containing 1 million words from 500 different texts. IBM and Carnegie Mellon University employees developed speech recognition algorithms with techniques such as the HMM and analogies to a noisy channel and decoding. }
+@@
+
+@@row
+  \card{Empiricism Redux}{Kaplan and Kay's work in phonology and syntax led to the two-level morphology model, which was influential in language modeling.
+
+  IBM's research in speech recognition, particularly through Statistical Machine Translation (SMT) and Hidden Markov Models (HMMs), introduced empiricism to computational linguistics.
+
+  [Connectionist strategies](https://en.wikipedia.org/wiki/Connectionism), inspired by neural networks, predated the neural language models we use today. Modern neural language models, like transformers in GPT or BERT, differ significantly in their complexity and capacity to learn from vast datasets.
+
+  The transition to probabilistic techniques was more a result of computational needs than a direct evolution.}
+@@
+@@ @@

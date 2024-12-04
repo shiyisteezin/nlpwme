@@ -1,0 +1,28 @@
+The non-overlap constraint |
+ :-------------------------:|
+Says that chains may not overlap. Every unit in the chain map has an excitatory link to the corresponding unit in the non-overlap map. (This type of linking between the units in two maps is called lateral linking). |
+|
+Thus, the units active in the chain map will activate their counterparts in the non-overlap map. The units in the non-overlap map will in turn have inhibitory diagonal, non-lateral links to their counterparts in the chain map.  |
+|
+In diagonal linking every unit in the source map is linked to its counter part in each column of the target (i.e. to the corresponding diagonal). |
+|
+A diagonal, non-lateral connection is the same as a diagonal connection except that the link to the directly corresponding unit is absent. |
+|
+The connections from an active unit in the non-overlap map to the chain map prevent the activation of any other node in the corresponding diagonal in the chain map, enforcing the constraint. (Nodes in the same diagonal represent the same syntactic marker and if two units both get activated and had moved to the same place, it will violate the non-overlap constraint).|}
+
+
+
+
+
+
+chain map with activated units on the right and d-structure on the left| 
+:-------------------------:|
+![](../extras/connectionism/structure-map.jpg)| 
+
+ 
+non-overlap constraints satisfactory map| 
+:-------------------------:|
+![](../extras/connectionism/case-filter-map-annotated.jpg)| 
+
+
+

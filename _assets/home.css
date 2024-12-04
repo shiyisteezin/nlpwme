@@ -1,0 +1,27 @@
+@import url('styles.css');
+
+
+
+h1, h2, h3, h4, h5, p, a {
+    font-size: 18px;
+    font-family: "Heebo-Regular", system-ui;
+}
+
+h5 {
+    font-weight: 700;
+    font-family: "Heebo-Medium", system-ui;
+}
+
+
+a, p {
+    font-size: 15px;
+    letter-spacing: normal;
+    /* text-align: justify; */
+}
+
+
+hr {
+    border-top: 1px solid #921a25;
+    box-shadow: 0 0 2px #999, 0 0 4px rgba(0, 0, 0, 0.125), 0 0 1rem rgba(255, 255, 255, .2), 0 0 4rem rgba(255, 255, 255, .3);
+    opacity: 1;
+}

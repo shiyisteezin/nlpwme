@@ -1,0 +1,11 @@
+MethodError: no method matching getindex(::Tuple{StateSpaceSets.StateSpaceSet{2, Float64}, StepRange{Int64, Int64}}, ::Colon, ::Int64)
+
+Closest candidates are:
+  getindex(::Tuple, ::Colon)
+   @ Base tuple.jl:33
+  getindex(::Tuple, !Matched::Int64)
+   @ Base tuple.jl:29
+  getindex(::Tuple, !Matched::Integer)
+   @ Base tuple.jl:30
+  ...
+

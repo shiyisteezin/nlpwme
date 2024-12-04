@@ -1,0 +1,38 @@
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  text-shadow: none;
+}
+
+a {
+  color: #2033dd;
+  text-shadow: none;
+}
+
+.info {
+  padding: 10px 10px;
+  font: 10px/12px Arial, Helvetica, sans-serif;
+  background: white;
+  background: rgba(255, 255, 255, 0.8);
+  /* box-shadow: 0 0 15px rgba(0, 0, 0, 0.2); */
+  border-radius: 5px;
+  position: relative;
+}
+
+.info h4 {
+  font-size: 11px;
+  margin: 0 0 0px;
+  color: #777;
+}
+
+
+#checkboxes {
+
+  text-align: right
+}
+code {
+  color: #00a699
+}

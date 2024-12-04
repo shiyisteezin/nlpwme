@@ -1,0 +1,32 @@
+body {
+  background: #fff;
+}
+
+
+.ag-header-cell-label {
+    justify-content: center;
+  }
+
+
+
+.leaflet-container.leaflet-touch-drag.leaflet-touch-zoom {
+    -ms-touch-action: none;
+    touch-action: none;
+    zoom: 75%;
+}
+
+li {
+  font-size: 15px;
+}
+
+
+.ag-header-cell-label {
+    justify-content: center;
+  }
+
+
+
+
+code {
+    color: #00a699
+}
